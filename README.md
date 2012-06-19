@@ -1,6 +1,24 @@
 
 ![Tartify, give some colors to your GIT_PS1](https://github.com/peterhost/bash-tartify/blob/master/img/tartify-logo.png?raw=true "Tartify : Optional title")
 
+## Install
+
+Just copy the 'tartify' bash script somewhere and source it
+
+    $ . ~/.bash/tartify
+
+## Usage
+
+    $ tartify -h
+
+(or see : tartify help section])
+
+    $ tartitune -h
+    $ tartiforce -h
+
+Wanna see how well `tartify`has polluted you ENV ?
+
+    $ tartitune
 
 ##Tartification for the masses
 
@@ -115,6 +133,210 @@ Beware the Law of \*ness
     Apparent signs of elderli*ness* tend to decrease opposite-sex
     attractive*ness*.
 
+
+##TARTIFY HELP (better see it with colors in your terminal)
+
+    NAME
+          tartify -- one-liner condensed git infos (for your prompt, screen
+                      statusline, ...)
+
+      synopsis
+          tartify [option string]
+
+      description
+          the option string is a case-sensitive sequence of characters.
+
+            * the following characters are reserved tartify commands :
+              0123456789aabbcdefhillmmnnopqrrsstww
+              (and maybe more alphhanumeric characters in the future)
+
+            * any other character will be printed "as is", including spaces. you can use
+            those to format the output of the tarttify command (as delimiters,...)
+                    `tartify [r]b - l` will output "[repository]branch - time"
+
+            * if you need multiple spaces, escape them "\ " :
+                    `tartify [r]b -\ \ l` will output "[repository]branch -  time"
+
+            * following characters need to be escaped  ()<>;*"'`#&|~
+
+
+            elements
+
+            ┌n       repository name          n   same without colors
+            └m       rep name + local path    m   same without colors
+            a       ancestor (indicator      a   same without colors
+                    if we're inside submodule)
+            ┌b       branch name              b          ` `
+            └o       branch name oldschool (__git_ps1)
+            r       remotes (all)            r          ` `
+            s       stash info               s          ` `
+            l       last commit info         l          ` `
+
+            modes
+
+                    default    default mode is implicit
+            q       quiet      only update ps1 variables, no output to stdout
+            p       ps1 mode   generate string with escaped (\[...\]) non-printing
+                              characters and tartify's own ps1 variables
+            v       vim mode   result formated for the vim tartify plugin
+                              (color info appended to result)
+
+            number  menu mode  display result as menu
+                    ┌───────────────────┐
+                    │1/4/7  2/5/8  3/6/9│
+                    │                   │
+                    │                  0│
+                    └───────────────────┘
+                    1line prompt 1 top left  2 top middle  3 top right
+                    2line prompt 4 top left  5 top middle  6 top right
+                    3line prompt 7 top left  8 top middle  9 top right
+                    0 bottom right (one liner)
+
+            mode's order of precedence ps1 -> quiet -> menu -> vim -> default
+
+            modifiers
+
+            d       pwd          issue $pwd if not in git repo
+            c       nocolor      strip all colors
+            t       no upstream  in branch (only staged/unstaged)
+            w       newline      add newline at end of result
+                                ignored in menu mode
+            w       newline      prepend newline to result
+                                ignored in menu mode
+            f       force        overwrite global tartify_force (once)
+                                (see tartitune(), tartiforce() )
+            i       split        split output (positionnal)
+                                -> left of  'i' : no output (=~ quiet mode)
+                                -> right of 'i' : stdout
+                                (useful when combining 'ps1' with 'menu mode')
+
+            help all other arguments are ignored
+
+            h     help      display this help message
+            e     env help  list customizable environment variables
+
+      default
+          tartify   : is equivalent to tartify nbrsl
+          tartify w : is equivalent to tartify nbrslw
+          tartify o : is equivalent to tartify obsr
+
+      see also
+          tartitune  (easy tune  tartify's settings)
+          tartiforce (temp. force overwrite any options passed to tartify)  
+
+
+##TARTITUNE HELP (better see it with colors in your terminal)
+
+      NAME
+          tartitune -- Quick color changer for tartify
+
+      SYNOPSIS
+          tartitune [-SHORTNAME ...][TARTIFY_[COLOR|STYLE]* ...][compound]
+          tartitune [string_or_setting]
+          tartitune [action]
+
+      DESCRIPTION
+          1) The order of command line arguments doesn't matter. When used
+          without arguments, tartitune pretty prints a list of ALL tartify
+          environment variables with their current value (same as `tartify e`)
+          2) As soon as you modify a tartify environment variable with tartitune,
+          you enter a 'tartitune session' and all tartify results (STDOUT,
+          PS1 or MENU) will be preceded by a * indicator, until you save your
+          changes, export them or exit the session (see actions below)
+          3) You can only use arguments from either compound, or string_or_setting,
+          or action at one given time
+
+          The options have the following meaning:
+
+          TARTIFY_[COLOR|STYLE]*
+                any sequence of TARTIFY_COLOR_* or TARTIFY_STYLE_* environment 
+                variables, by full name (eg: TARTIFY_COLOR_BRANCH_STAGED)
+                      -> case insensitive
+                      -> run tartitune without any argument to get a complete
+                        list of ALL tartify environment variables with their
+                        current value)
+                      -> use T+completion to loop through full names
+
+          -SHORTNAME
+                any sequence of TARTIFY_COLOR or TARTIFY_STYLE environment
+                variables, by short name (eg: -COLOR_STAGED), prefixed with 
+                a single-dash
+
+                  -> case insensitive
+                  -> use dash+completion to loop through short names
+
+                If no environement variable is specified, tartitune
+                will print the compound color corresponding to compound
+                to STDOUT
+
+          compound  a list of any of the following words (case insensitive,
+                use completion to loop through)
+
+                bold    emphasized underlined  inverse
+                                              /reverse
+
+                black   red        green     yellow
+                blue    magenta    cyan      white
+
+                BGblack BGred      BGgreen   BGyellow
+                BGblue  BGmagenta  BGcyan    BGwhite
+
+                test      Doesn't modify any environment variable, just simulates.
+
+        string_or_setting  any ONE of the following words (case insensitive,
+              use completion to loop through)
+
+              bugme     switch TARTIFY_SETTING_TIME_BUGME setting on/off
+              timelong  set    TARTIFY_SETTING_TIME_DISPLAY setting to LONG
+              timeshort set    TARTIFY_SETTING_TIME_DISPLAY setting to SHORT
+              timechar  set    TARTIFY_SETTING_TIME_DISPLAY setting to CHAR
+
+        action  any ONE of the following words (case insensitive,
+              use completion to loop through)
+
+              export    Save the current tartify environment in ~/.tartitunebak
+                        (WARN: will overwrite previous .tartitunebak silently).
+                        Move ~/.tartitunebak to ~/.tartifyrc to make that the
+                        default tartify environment.
+              nuke      Replace ~/.tartifyrc with the current tartify
+                        environment
+              quit      Exit tartitune session (discard changes)
+              last      Resume latest tartitune session
+
+    LIMITATIONS
+
+          * tartitune won't have visible effects on tartify's compound colors 
+            in your PS1 as the colors in PS1 are hardcoded at PS1 creation time.
+            However, the indicator will be present. In which case, use tartify
+            from the command line to see the coloring effects of tartitune
+          * action and string_or_setting tartitune options will be reflected
+            in PS1 realtime
+
+    SEE ALSO
+          tartify, tartiforce
+    EXAMPLES
+
+          $ tartitune TARTIFY_COLOR_BRANCH_STAGED bold magenta
+          $ tartitune -COLOR_BRANCH_STAGED bold blue underline verbose
+          TARTIFY_COLOR_BRANCH_STAGED (was) (now is)
+          $ tartitune -COLOR_BRANCH_STAGED -COLOR_BRANCH_UPTODATE r i test
+          TARTIFY_COLOR_BRANCH_STAGED (was) (*TEST*)
+          TARTIFY_COLOR_BRANCH_UPSTREAM_UPTODATE (was) (*TEST*)
+          $ tartitune test bold cyan
+          *TEST*
+          $ tartitune un yellow; echo \"colored string\"
+          colored string
+          $ MYENVVAR=$(tartitune bo r); echo $MYENVVAR\"colored string\"
+          colored string        
+
+
+
+##TARTIFORCE HELP (better see it with colors in your terminal)
+
+    tartiforce : 
+            argstring   force tartify settings
+            empty       unforce tartify settings  
+
 ##Doesn't it say something about Vim ?
 
 Since the advent of the
@@ -128,7 +350,7 @@ the parseable string by issuing :
     #
     # ----------------------------------------------------------------------
     $ tartify v
-    bash-glamvimsplitsepOUT|mastervimsplitsep➝ O (2/-3)➝ U(20/-240) ⇧ (12)vimsplitsep•vimsplitsep21d,21h,19m
+    homebrewvimsplitsepOUT|mastervimsplitsep➝ O (2/-3)➝ U(20/-240) ⇧ (12)vimsplitsep•vimsplitsep21d,21h,19m
     #
     # 'vimsplitsep' is a separator (as tartify uses all sorts of
     # symbols, i thought a stupid string would be more foolproof)
@@ -136,14 +358,14 @@ the parseable string by issuing :
     # ----------------------------------------------------------------------
     # Cleaned up :
     #
-    bash-glam    // OUT|master   //   ➝ O (2/-3)➝ U(20/-240) ⇧ (12)   //   ••   //   21d,21h,19m
+    homebrew    // OUT|master   //   ➝ O (2/-3)➝ U(20/-240) ⇧ (12)   //   ••   //   21d,21h,19m
     #
     # ----------------------------------------------------------------------
     # which means :
     #
     # FIELD1 : REPONAME (sortof `pwd`)
     # |
-    # |__repo name is : bash-glam
+    # |__repo name is : homebrew
     #
     # FIELD2 : REPO/BRANCH STATE
     # |
@@ -206,10 +428,6 @@ the parseable string by issuing :
     #        BISECTING
     #
 
-
-##Install
-
-    Do it yourself
 
 
 ##Preemptive FAQ
