@@ -136,15 +136,15 @@ Beware the Law of \*ness
 
 ##TARTIFY HELP
 
-![Tartify, give some colors to your GIT_PS1](https://github.com/peterhost/bash-tartify/blob/master/img/bash-tartify-helptartify.png?raw=true "Tartify : Optional title")
+![Tartify, give some colors to your GIT_PS1](https://github.com/peterhost/bash-tartify/blob/master/img/bash-tartify-help.png?raw=true "Tartify : Optional title")
 
-##TARTITUNE HELP (better see it with colors in your terminal)
+##TARTITUNE HELP
 
 ![Tartify, give some colors to your GIT_PS1](https://github.com/peterhost/bash-tartify/blob/master/img/tartitune-help.png?raw=true "Tartify : Optional title")
 
 
 
-##TARTIFORCE HELP (better see it with colors in your terminal)
+##TARTIFORCE HELP
 
     tartiforce : 
             argstring   force tartify settings
