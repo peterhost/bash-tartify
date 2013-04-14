@@ -820,7 +820,7 @@ __tartify_init_globs(){
   export TARTIFY_STRING_REMOTE_ORIGIN="O"                 # marker for remote repo called 'origin'
   export TARTIFY_STRING_REMOTE_UPSTREAM="U"               # marker for remote repo called 'upstream'
   [ "true" = $supports8 ] && {
-  export TARTIFY_STRING_REMOTE_OTHER="⇧ "                 # generic marker for remote repo
+  export TARTIFY_STRING_REMOTE_OTHER=" ⇧ "                 # generic marker for remote repo
   export TARTIFY_STRING_REMOTE_TRACKING="➝ "              # marker for tracked branch
   } || {
   export TARTIFY_STRING_REMOTE_OTHER="X "                 # generic marker for remote repo
