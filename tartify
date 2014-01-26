@@ -1967,7 +1967,7 @@ __tartify_ancestor() {
 
         # child repo present in .gitmodules ?
         cd $repopath2
-        cat .gitmodules | grep $reponame >/dev/null 2>&1
+        [ -f .gitmodules ] && cat .gitmodules | grep $reponame >/dev/null 2>&1
         [ $? -eq 0 ] || printf "%s" "$TARTIFY_STRING_ANCESTOR_NOSUB"
         [ -z "$TARTIFY_STRING_ANCESTOR_MARKER" ] && printf "%s" "$reponame2" || printf "%s" "$TARTIFY_STRING_ANCESTOR_MARKER"
       fi
